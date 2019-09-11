@@ -1,0 +1,42 @@
+﻿@model IEnumerable<StoreLayer.WEB.Models.ProductViewModel>
+@{
+    ViewBag.Title = "Список автомобилей";
+}
+
+<h2>Список автомобилей</h2>
+
+<table>
+    <tr>
+        <th>Название</th>
+        <th>Описание</th>
+        <th>Цена</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td class=" btnpos">
+                @if (User.IsInRole("admin") || User.IsInRole("manager"))
+                {
+                    @Html.ActionLink("Редактировать", "EditProduct", new { id = item.Id }, new { @class = "btn" })
+                }
+                @if (User.IsInRole("admin"))
+                {
+                    @Html.ActionLink("Удалить", "DeleteProduct", new { id = item.Id }, new { @class = "btn" })
+                }
+                    @Html.ActionLink("В корзину", "AddToCart", "Cart", new { productId = item.Id }, new { @class = "btn" })
+
+                </td>
+        </tr>
+    }
+</table>
+
