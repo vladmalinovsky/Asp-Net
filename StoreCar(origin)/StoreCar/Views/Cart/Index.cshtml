@@ -1,0 +1,46 @@
+﻿@model StoreCar.Models.CartIndexViewModel
+
+@{
+    ViewBag.Title = "Shopping cart";
+}
+<h2>Ваша корзина</h2>
+<table width="90%" align="center">
+    <thead>
+        <tr>
+            <th align="center">Количество</th>
+            <th align="left">Автомобиль</th>
+            <th align="right">Цена</th>
+            <th align="right">Стоимость</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model.Cart.Lines)
+        {
+        <tr>
+            <td align="center">@line.Quantity</td>
+            <td align="left">@line.Product.Name</td>
+            <td align="right">@line.Product.Price</td>
+            <td align="right">@((line.Quantity * line.Product.Price))</td>
+            <td class=" btnpos">@Html.ActionLink("Удалить из корзины", "RemoveFromCart", "Cart", new { productId = line.Product.Id }, new { @class = "btn" })</td>
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" align="right">
+            <h1>Total:</h1>
+            </td>
+            <td align="center">
+                <h1>
+                    @Model.Cart.ComputeTotalValue()
+                </h1>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<p align="center" class="actionButtons">
+    @Html.ActionLink("Вернуться к списку авто","ShowProducts", "Product",null,new { @class = "btn" })
+</p>
+<p align="center" class="actionButtons">
+    @Html.ActionLink("Купить", "Checkout", "Cart", null, new { @class = "btn" })
+</p>
