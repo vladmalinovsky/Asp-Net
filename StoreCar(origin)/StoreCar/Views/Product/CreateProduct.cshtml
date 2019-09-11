@@ -1,0 +1,19 @@
+﻿@model  StoreCar.Models.Product
+
+@{
+    ViewBag.Title = "CreateProduct";
+    Html.EnableClientValidation(false);
+}
+
+<h2>Создать авто: @Html.LabelForModel()</h2>
+@using (Html.BeginRouteForm("Default", null, FormMethod.Post,
+    new { @class = "userCssClass", data_formType = "user" }))
+{
+    <div class="column">
+        @Html.EditorForModel()
+    </div>
+
+    <input type="submit" value="Отправить" class="btn" />
+}
+
+
